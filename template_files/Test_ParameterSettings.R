@@ -89,7 +89,11 @@ Y_AS_new = F # get new AS for variability based on GX association with SD, eigen
 #############################
 # Parameters for SNP association 
 #############################
+<<<<<<< HEAD
 AssocModel = "linMixed"      # possible models: meanSD, eigenfunc, linMixed, gamlss
+=======
+AssocModel = "meanSD"      # possible models: meanSD, eigenfunc, linMixed, gamlss
+>>>>>>> 44a1cbeee92535f936a2e5a8e33faa5e25eb5333
 linMixed_random = F        # only relevant in linMixed assoc model, should these time points be selected randomly or not
 linMixed_NRtimepoints = 5  # only relevant in linMixed assoc model and random = T, how many time points should be used for lineare mixed regression
 eigenfunc_cutoff = 0.01
