@@ -40,15 +40,15 @@ source("../helperfunctions/MR_jp.R")
 #############################
 n_samples = 10000
 n_times = 30
-n_times_random = F
+n_times_random = T
 n_times_random_min = 20 
 n_times_random_max = n_times
 n_sim = 10
-outfiles_prefix = "XX_Sim_fluc_gamlss_noMVMRcor"
+outfiles_prefix = "XX_Sim_fluc_linMixed_noMVMRcor_randomTime"
 outfiles_dir = "results_test"
 save_data_perSim = F
 do_plotting = F
-n_cores = 2
+n_cores = 10
 
 #############################
 # Parameters for SNP simulation
@@ -89,7 +89,7 @@ Y_AS_new = F # get new AS for variability based on GX association with SD, eigen
 #############################
 # Parameters for SNP association 
 #############################
-AssocModel = "gamlss"      # possible models: meanSD, eigenfunc, linMixed, gamlss
+AssocModel = "linMixed"      # possible models: meanSD, eigenfunc, linMixed, gamlss
 linMixed_random = F        # only relevant in linMixed assoc model, should these time points be selected randomly or not
 linMixed_NRtimepoints = 5  # only relevant in linMixed assoc model and random = T, how many time points should be used for lineare mixed regression
 eigenfunc_cutoff = 0.01
