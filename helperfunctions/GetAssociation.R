@@ -23,7 +23,7 @@ GetAssociation = function(data,method,genotypes,dep_var_name){
   stopifnot(method %in% c("linReg","linMixed","gamlss"))
   
   # step 1: get number of SNPs to be tested
-  SNPs_NR = dim(G)[2]
+  SNPs_NR = dim(genotypes)[2]
   time_NR = unique(data$time)
   sample_NR = unique(data$ID)
   
@@ -32,7 +32,7 @@ GetAssociation = function(data,method,genotypes,dep_var_name){
     
     modTab = foreach(j = 1:SNPs_NR)%do%{
       #j=1
-      Gj = G[,j]
+      Gj = genotypes[,j]
       helper = data.table(ID = sample_NR,
                           SNP = Gj)
       data2 = copy(data)
@@ -57,7 +57,7 @@ GetAssociation = function(data,method,genotypes,dep_var_name){
   }else if(method == "linMixed"){
     modTab = foreach(j = 1:SNPs_NR)%do%{
       #j=1
-      Gj = G[,j]
+      Gj = genotypes[,j]
       helper = data.table(ID = sample_NR,
                           SNP = Gj)
       data2 = copy(data)
@@ -80,7 +80,7 @@ GetAssociation = function(data,method,genotypes,dep_var_name){
   }else if(method == "gamlss"){
     modTab = foreach(j = 1:SNPs_NR)%do%{
       #j=1
-      Gj = G[,j]
+      Gj = genotypes[,j]
       helper = data.table(ID = sample_NR,
                           SNP = Gj)
       data2 = copy(data)
