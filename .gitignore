@@ -54,3 +54,5 @@ rsconnect/
 **/*.md
 **/_archive/
 results_test/*
+**/*.RData
+**/Test*
