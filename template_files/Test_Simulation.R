@@ -25,7 +25,7 @@
 rm(list = ls())
 time0<-Sys.time()
 
-source("../template_files/ParameterSettings_test.R")
+source("../template_files/Test_ParameterSettings.R")
 
 set.seed(2023)
 
@@ -53,7 +53,7 @@ counter = seq(1,n_sim,n_sim/10)
 SimTab = foreach(s = 1:n_sim)%dorng%{
   #s=1
   #message("Working on simulation ",s)
-  source("../template_files/ParameterSettings_test.R")
+  source("../template_files/Test_ParameterSettings.R")
   
   #' ## Step 0: create directory to store data
   #' ***
