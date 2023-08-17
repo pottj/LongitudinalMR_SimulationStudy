@@ -47,3 +47,10 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+# Other
+**/Simulation_*
+**/Evaluation*
+**/*.md
+**/_archive/
+results_test/*
