@@ -10,8 +10,8 @@
 #' ***
 #' Scenario XX: 
 #' 
-#' - variability by **trend** 
-#' - using **eigenfunctions** as exposure
+#' - variability by **fluctuations** 
+#' - using **mean and SD** as exposure
 #' - **not correcting** the final MVMR estimate with regression coefficient of the allele scores
 #' 
 #' General scenario: 
@@ -25,7 +25,7 @@
 rm(list = ls())
 time0<-Sys.time()
 
-source("../settings_allTimepoints/XX_ParameterSettings.R")
+source("../template_files/Temp_ParameterSettings.R")
 
 set.seed(2023)
 
@@ -53,7 +53,7 @@ counter = seq(1,n_sim,n_sim/10)
 SimTab = foreach(s = 1:n_sim)%dorng%{
   #s=1
   #message("Working on simulation ",s)
-  source("../settings_allTimepoints/XX_ParameterSettings.R")
+  source("../template_files/Temp_ParameterSettings.R")
   
   #' ## Step 0: create directory to store data
   #' ***
@@ -326,9 +326,7 @@ SimTab = foreach(s = 1:n_sim)%dorng%{
       if(linMixed_random == T){
         dumTab = foreach(i = 1:n_samples)%do%{
           #i=2
-          start = (i-1)*30 + 1
-          end = i*30
-          test = myTabX_long[start:end,]
+          test = myTabX_long[ID == i,]
           uniqueTimepoints_i = test$time
           filt_timepoints = sample(uniqueTimepoints_i,linMixed_NRtimepoints,replace = F)
           test = test[time %in% filt_timepoints,]
@@ -338,9 +336,7 @@ SimTab = foreach(s = 1:n_sim)%dorng%{
       }else{
         dumTab = foreach(i = 1:n_samples)%do%{
           #i=2
-          start = (i-1)*30 + 1
-          end = i*30
-          test = myTabX_long[start:end,]
+          test = myTabX_long[ID == i,]
           test = test[c(1:linMixed_NRtimepoints),]
           test
         }

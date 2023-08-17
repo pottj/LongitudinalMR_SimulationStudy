@@ -326,9 +326,7 @@ SimTab = foreach(s = 1:n_sim)%dorng%{
       if(linMixed_random == T){
         dumTab = foreach(i = 1:n_samples)%do%{
           #i=2
-          start = (i-1)*30 + 1
-          end = i*30
-          test = myTabX_long[start:end,]
+          test = myTabX_long[ID == i,]
           uniqueTimepoints_i = test$time
           filt_timepoints = sample(uniqueTimepoints_i,linMixed_NRtimepoints,replace = F)
           test = test[time %in% filt_timepoints,]
@@ -338,9 +336,7 @@ SimTab = foreach(s = 1:n_sim)%dorng%{
       }else{
         dumTab = foreach(i = 1:n_samples)%do%{
           #i=2
-          start = (i-1)*30 + 1
-          end = i*30
-          test = myTabX_long[start:end,]
+          test = myTabX_long[ID == i,]
           test = test[c(1:linMixed_NRtimepoints),]
           test
         }

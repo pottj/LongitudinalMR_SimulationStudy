@@ -24,6 +24,8 @@ GetAssociation = function(data,method,genotypes,dep_var_name){
   
   # step 1: get number of SNPs to be tested
   SNPs_NR = dim(G)[2]
+  time_NR = unique(data$time)
+  sample_NR = unique(data$ID)
   
   # step 2: loop per SNP
   if(method == "linReg"){
@@ -31,10 +33,12 @@ GetAssociation = function(data,method,genotypes,dep_var_name){
     modTab = foreach(j = 1:SNPs_NR)%do%{
       #j=1
       Gj = G[,j]
-      
+      helper = data.table(ID = sample_NR,
+                          SNP = Gj)
       data2 = copy(data)
-      data2[, mySNP := Gj]
-      data2[, myVar := get(dep_var_name)]
+      matched = match(data2$ID,helper$ID)
+      data2[,mySNP := helper[matched,SNP]]
+      data2[,myVar := get(dep_var_name)]
       
       mod1 = lm(myVar ~ mySNP, data = data2)
       #summary(mod1)
@@ -51,13 +55,14 @@ GetAssociation = function(data,method,genotypes,dep_var_name){
     }
     
   }else if(method == "linMixed"){
-    time_NR = data[,.N,by=ID]
-    stopifnot(length(unique(time_NR$N))==1)
     modTab = foreach(j = 1:SNPs_NR)%do%{
       #j=1
       Gj = G[,j]
+      helper = data.table(ID = sample_NR,
+                          SNP = Gj)
       data2 = copy(data)
-      data2[,mySNP := rep(Gj, each=time_NR$N[1])]
+      matched = match(data2$ID,helper$ID)
+      data2[,mySNP := helper[matched,SNP]]
       data2[,myVar := get(dep_var_name)]
       
       modX_G = lmer(myVar ~ mySNP + time + (1|ID) + mySNP:time, data = data2)
@@ -73,12 +78,14 @@ GetAssociation = function(data,method,genotypes,dep_var_name){
     }
     
   }else if(method == "gamlss"){
-    time_NR = unique(data$time)
     modTab = foreach(j = 1:SNPs_NR)%do%{
       #j=1
       Gj = G[,j]
+      helper = data.table(ID = sample_NR,
+                          SNP = Gj)
       data2 = copy(data)
-      data2[,mySNP := rep(Gj, each=length(time_NR))]
+      matched = match(data2$ID,helper$ID)
+      data2[,mySNP := helper[matched,SNP]]
       data2[,myVar := get(dep_var_name)]
       
       modX_G = gamlss(myVar ~ mySNP + scale(time), random=~1|ID, sigma.formula = ~mySNP, 
