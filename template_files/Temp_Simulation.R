@@ -6,26 +6,13 @@
 #' output: github_document
 #' ---
 #'
-#' # Introduction ####
-#' ***
-#' Scenario XX: 
-#' 
-#' - variability by **fluctuations** 
-#' - using **mean and SD** as exposure
-#' - **not correcting** the final MVMR estimate with regression coefficient of the allele scores
-#' 
-#' General scenario: 
-#' 
-#' - shared SNP set
-#' - all time points
-#' 
 #' # Initialize ####
 #' ***
 
 rm(list = ls())
 time0<-Sys.time()
 
-source("../template_files/Temp_ParameterSettings.R")
+source("../template_files/Test_ParameterSettings.R")
 
 set.seed(2023)
 
@@ -36,12 +23,19 @@ if(dir.exists(paste0("../",outfiles_dir,"/",outfiles_prefix))==F){
   message("Using pre-existing results folder ",paste0("../",outfiles_dir,"/",outfiles_prefix))
 }
 
-message("Working with the following variable settings:")
-message("- Using ",length(unique(SNPs_classes))," SNP sets")
-message("- Using ",X_useAs2ndFunction," as function to simulate time-dependent X")
-message("- Using ",AssocModel," as exposure of interest")
-message("- Using new AS for outcome definition: ",Y_AS_new)
-message("- Using correction coefficients on causal estimates: ",MR_doCorrection)
+message("Fixed parameters: 
+        \n - number of samples: ",n_samples,
+        "\n - number of time points: ",n_times,
+        "\n - number of simulations: ",n_sim,
+        "\n - number of SNPs: ",SNPs_NR,
+        "\n - number of cores: ",n_cores)
+
+message("Global setting: 
+        \n - number of SNP sets: ",length(unique(SNPs_classes))," (1 = shared set; 2=distinct sets for exposure 1 and 2)         \n - timepoints per individual: ",n_times_random, " (FALSE = no missing timepoints; TRUE = random missing timepoints per individual)")
+
+message("Scenario settings: 
+        \n - second function: ",X_useAs2ndFunction," (1 = fluctuation using sinus (amplitude); 2 = trend-like using sinus (wavelength); 3 = trend using linear slope) \n - exposure model: ",AssocModel,
+        "\n - correction ov MVMR estiamtes: ",MR_doCorrection," (FALSE = no correction; TRUE = correct with beta coefficient of linear regression of allele scores on exposures; only relevant for model meanSD and eigenfunc)")
 
 #' # Simulation ####
 #' ***
@@ -53,7 +47,7 @@ counter = seq(1,n_sim,n_sim/10)
 SimTab = foreach(s = 1:n_sim)%dorng%{
   #s=1
   #message("Working on simulation ",s)
-  source("../template_files/Temp_ParameterSettings.R")
+  source("../template_files/Test_ParameterSettings.R")
   
   #' ## Step 0: create directory to store data
   #' ***
