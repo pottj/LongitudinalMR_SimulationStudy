@@ -56,3 +56,4 @@ rsconnect/
 results_test/*
 **/*.RData
 **/Test*
+**/*.out

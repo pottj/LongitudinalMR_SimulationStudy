@@ -13,9 +13,9 @@ Here, I want to store the code to run the simulation, and all relevant setting f
 I want to test 4 global settings
 
 1) shared SNP set for the exposure (likely) and no missing data points (unlikely)
-2) shared SNP set for the exposure (likely) and missing data points (likely)
 2) distinct SNP sets for the exposure (unlikely) and no missing data points (unlikely)
-2) distinct SNP sets for the exposure (unlikely) and missing data points (likely)
+3) distinct SNP sets for the exposure (unlikely) and missing data points (likely)
+4) shared SNP set for the exposure (likely) and missing data points (likely)
 
 ## GX association models
 
