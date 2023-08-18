@@ -40,8 +40,8 @@ message("Scenario settings:
 #' # Simulation ####
 #' ***
 
-#registerDoParallel(as.numeric(Sys.getenv("SLURM_CPUS_PER_TASK")))
-registerDoParallel(n_cores)
+registerDoParallel(as.numeric(Sys.getenv("SLURM_CPUS_PER_TASK")))
+#registerDoParallel(n_cores)
 
 counter = seq(1,n_sim,n_sim/10)
 SimTab = foreach(s = 1:n_sim)%dorng%{
